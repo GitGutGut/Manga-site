@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import Navbar from './navbar';
-import { Link } from 'react-router-dom';
-
+import { Link, Navigate } from 'react-router-dom';
+import axios from 'axios';
+import { useAuth } from './authContext';
 
 const Login = () => {
     const [formDataLogin, setFormData] = useState({
-        email: '',
+        e_mail: '',
         password: ''
     });
+    const { authData, updateAuthData } = useAuth();
 
     const handleChange = (e) => {
         setFormData({
@@ -19,41 +21,55 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form submitted:', formDataLogin);
-        // HANDLE BACKEND
+        axios.post("http://localhost:8000/polls/user-login/",
+            formDataLogin
+        ).then(response => {
+            console.log('Response', response.data);
+            updateAuthData({isLoggedIn: true, e_mail: formDataLogin.e_mail});
+            
+            
+
+        }).catch(error => {
+            console.error('Error:', error.response.data.message);
+        })
     }
-
-
     return (
         <div className='home'>
             <Navbar />
-            <div className='login'>
-                <h2>Login</h2>
-                <div className='email'>
-                    <label>Email:</label>
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder='Email'
-                        value={formDataLogin.email}
-                        onChange={handleChange}
-                    />
+            {authData.isLoggedIn ? (
+                <div className='login'>
+                    <h2>Welcome! You are logged in.</h2>
                 </div>
-                <div className='password'>
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder='Password'
-                        value={formDataLogin.password}
-                        onChange={handleChange}
-                    />
+            ) : (
+                <div className='login'>
+                    <h2>Login</h2>
+                    <div className='email'>
+                        <label>Email:</label>
+                        <input
+                            type="email"
+                            name="e_mail"
+                            placeholder='Email'
+                            value={formDataLogin.e_mail}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className='password'>
+                        <label>Password:</label>
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder='Password'
+                            value={formDataLogin.password}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <Link to='/register' className='register_link'>Not logged in?</Link>
+                    <button type="submit" onClick={handleSubmit}>Login</button>
                 </div>
-                <Link to='/register' className='register_link'>Not logged in?</Link>
-                <button type="submit"
-                    onClick={handleSubmit}>Login</button>
-            </div>
+            )}
         </div>
     );
-}
+};
+
 
 export default Login;
