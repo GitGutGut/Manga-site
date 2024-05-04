@@ -28,30 +28,30 @@ class FullMangaSerializer(serializers.Serializer):
     photo_file_path = serializers.CharField(max_length=255, allow_blank=True, allow_null=True)
 
     def create(self, data):
-        manga_name = data['name']
+        mangaName = data['name']
         description = data['description']
-        chapter_amount = data['chapter_amount']
+        chapterAmount = data['chapter_amount']
         author = data['author']
-        photo_path = data['photo_path']
-        chapters_path = data['chapters_path']
+        photoPath = data['photo_path']
+        chaptersPath = data['chapters_path']
 
         with transaction.atomic():
             manga_instance = Manga.objects.create(
-                name=manga_name,
+                name=mangaName,
                 description=description,
-                chapter_amount=chapter_amount,
+                chapter_amount=chapterAmount,
                 author=author
             )
 
             photo_instance = Photo.objects.create(
-                title=manga_name,  
-                file_path=photo_path,
+                title=mangaName,  
+                file_path=photoPath,
                 mangaid=manga_instance.id 
             )
 
             chapters_amount = Chapters.objects.create(
                 mangaid = manga_instance.id,
-                chapters_path=chapters_path
+                chapters_path=chaptersPath
             )
         
         return manga_instance.id
@@ -75,8 +75,8 @@ class UserSerializer(serializers.ModelSerializer):
     def validate_name(self, value):
         if User.objects.filter(name=value).exists():
             raise serializers.ValidationError("Name already exists")
-        if len(value) > 32:
-            raise serializers.ValidationError("Name too long")
+        if len(value) > 32 or len(value) == 0:
+            raise serializers.ValidationError("Name is incorrect format")
         return value
     
     def validate_password(self, value):

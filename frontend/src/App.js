@@ -15,7 +15,7 @@ function App() {
               <Route exact path="/" element={<Home />} />
               <Route exact path="/register" element={<Register />} />
               <Route exact path='/login' element={<Login />} />
-              <Route exact path='/addManga' element={<AddManga/>} />
+              <Route exact path='/addManga' element={<AddManga />} />
             </Routes>
           </div>
           <div className="component">

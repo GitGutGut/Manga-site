@@ -12,13 +12,11 @@ const Navbar = () => {
             <div className="links">
                 <a href="/"> Main menu</a>
                 {authData.isAdministrator && (<a href="/addManga">AddManga</a>)}
-
                 {authData.isLoggedIn ? (
                     <>
                         <button type='button'
                             onClick={handleLogout}>LOGOUT</button>
                     </>
-
                 ) : (
                     <>
                         <a href="/register"> Register</a>

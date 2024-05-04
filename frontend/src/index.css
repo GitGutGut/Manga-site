@@ -39,19 +39,21 @@ code {
   padding: 10px;
 }
 
-.navbar a, button {
+.navbar a,
+button {
   font-size: 20px;
   font-family: fantasy;
   text-decoration: none;
   padding: 6px;
   color: black;
 }
-.navbar .links button{
+
+.navbar .links button {
   background-color: #444444;
   border: none;
 }
 
-.navbar .main_menu  {
+.navbar .main_menu {
   margin-left: auto;
 }
 
@@ -75,23 +77,26 @@ code {
   height: auto;
 }
 
-
-
-
-.mainContent {
+.mainContent, .register, .login {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   width: 100%;
   max-width: 800px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
   background-color: white;
   margin: 0 auto;
   border-radius: 20px;
 }
 
-.mangaName, .authorName, .Description, .tags, .chapterAmount, .episodes, .photoUpload {
+.mangaName,
+.authorName,
+.Description,
+.tags,
+.chapterAmount,
+.episodes,
+.photoUpload {
   display: flex;
   flex-direction: column;
 }
@@ -103,7 +108,11 @@ label {
   color: #333;
 }
 
-input[type="text"], input[type="file"], textarea {
+input[type="text"],
+input[type="file"],
+input[type="email"],
+input[type="password"],
+textarea {
   padding: 8px;
   font-size: 16px;
   border: 1px solid #ccc;
@@ -132,4 +141,3 @@ button {
 button:hover {
   background-color: #666;
 }
-

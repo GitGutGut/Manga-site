@@ -4,7 +4,7 @@ import { useAuth } from './authContext';
 
 const Home = () => {
     const [mangaData, setmangaData] = useState([])
-    const {isLoggedIn, setIsLoggedIn} = useAuth();
+    const { isLoggedIn, setIsLoggedIn } = useAuth();
 
     useEffect(() => {
         fetchMangaData();
