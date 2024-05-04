@@ -18,16 +18,29 @@ const Login = () => {
         });
     }
 
-    const handleSubmit = (e) => {
+    const checkIfAdministrator = async () => {
+        await axios.get("http://localhost:8000/polls/user-login/",
+            {
+                params: {
+                    e_mail: formDataLogin.e_mail
+                }
+            }
+        ).then(response => {
+            updateAuthData({ isAdministrator: response.data.administrator });
+        }).catch(error => {
+            console.error("Error fetching data:", error);
+        })
+    }
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log('Form submitted:', formDataLogin);
-        axios.post("http://localhost:8000/polls/user-login/",
+        await axios.post("http://localhost:8000/polls/user-login/",
             formDataLogin
         ).then(response => {
             console.log('Response', response.data);
-            updateAuthData({isLoggedIn: true, e_mail: formDataLogin.e_mail});
-            
-            
+            updateAuthData({ isLoggedIn: true, e_mail: formDataLogin.e_mail });
+            checkIfAdministrator()
+
 
         }).catch(error => {
             console.error('Error:', error.response.data.message);

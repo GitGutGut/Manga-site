@@ -3,7 +3,7 @@ import Register from "./register";
 import Home from "./home";
 import Login from "./login";
 import { AuthProvider } from './authContext';
-
+import AddManga from './addManga';
 
 function App() {
   return (
@@ -15,6 +15,7 @@ function App() {
               <Route exact path="/" element={<Home />} />
               <Route exact path="/register" element={<Register />} />
               <Route exact path='/login' element={<Login />} />
+              <Route exact path='/addManga' element={<AddManga/>} />
             </Routes>
           </div>
           <div className="component">

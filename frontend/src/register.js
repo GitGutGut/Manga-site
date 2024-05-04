@@ -20,10 +20,10 @@ const Register = () => {
     });
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Form submitted:', formDataRegister);
-    axios.post("http://localhost:8000/polls/user-registration/",
+    await axios.post("http://localhost:8000/polls/user-registration/",
       formDataRegister
     ).then(response => {
       console.log('Response', response.data);

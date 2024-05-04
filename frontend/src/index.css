@@ -74,3 +74,62 @@ code {
   justify-content: center;
   height: auto;
 }
+
+
+
+
+.mainContent {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  padding: 20px;
+  background-color: white;
+  margin: 0 auto;
+  border-radius: 20px;
+}
+
+.mangaName, .authorName, .Description, .tags, .chapterAmount, .episodes, .photoUpload {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-family: fantasy;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #333;
+}
+
+input[type="text"], input[type="file"], textarea {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+input[type="file"] {
+  background-color: #f1f1f1;
+  margin-bottom: 15px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #444;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #666;
+}
+

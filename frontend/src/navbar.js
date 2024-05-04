@@ -4,14 +4,15 @@ const Navbar = () => {
     const { authData, updateAuthData } = useAuth();
 
     const handleLogout = (e) => {
-        updateAuthData({ isLoggedIn: false })
+        updateAuthData({ isLoggedIn: false, isAdministrator: false })
     }
 
-    const otherData = authData.e_mail;
     return (
         <nav className="navbar">
             <div className="links">
                 <a href="/"> Main menu</a>
+                {authData.isAdministrator && (<a href="/addManga">AddManga</a>)}
+
                 {authData.isLoggedIn ? (
                     <>
                         <button type='button'
