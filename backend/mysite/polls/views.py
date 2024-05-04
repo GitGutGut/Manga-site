@@ -42,4 +42,7 @@ class UserLogin(APIView):
             return Response({'message': 'User does not exist.'}, status=status.HTTP_404_NOT_FOUND)
         
     def get(self, request):
-        pass
+        e_mail = request.query_params.get('e_mail')
+        user = User.objects.get(e_mail=e_mail)
+        administrator = user.administrator
+        return Response({'administrator': administrator})

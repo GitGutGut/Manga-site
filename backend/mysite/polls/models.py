@@ -13,6 +13,7 @@ class User(models.Model):
     e_mail = models.CharField(db_column='e-mail', primary_key=True, max_length=255)  # Field renamed to remove unsuitable characters.
     password = models.CharField(max_length=255, blank=True, null=True)
     name = models.CharField(max_length=255, blank=True, null=True)
+    administrator = models.BooleanField(default=False)
 
     class Meta:
         managed = False
