@@ -39,8 +39,18 @@ const AddManga = () => {
         });
     }
     const handleMangaAdd = async (e) => {
-        //TODO: BACKEND SEND DATA
-        console.log(mangaInformation)
+        e.preventDefault();
+        console.log('Form submitted:', mangaInformation);
+        await axios.post("http://localhost:8000/polls/manga-api/",
+            mangaInformation, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(response => {
+            console.log("Response: ", response);
+        }).catch(error => {
+            console.error(error);
+        })
     }
 
     return (
@@ -57,8 +67,8 @@ const AddManga = () => {
                 </div>
                 <div className='authorName'>
                     <label>Author name:</label>
-                    <input type="authorName"
-                        name='authorName'
+                    <input type="author"
+                        name='author'
                         onChange={handleChange} />
                 </div>
                 <form>
@@ -79,17 +89,17 @@ const AddManga = () => {
                         name="chapter_amount"
                         onChange={handleChange} />
                 </div>
-                <div className='episodes'>
+                <div className='photo'>
                     <label>Upload Photo:</label>
                     <input type="file"
                         name="photo"
                         accept=".png, .jpg, .jpeg"
-                        onClick={handleFileChange} />
+                        onChange={handleFileChange} />
                 </div>
-                <div className='photoUpload'>
+                <div className='episodes'>
                     <label>Upload Episodes:</label>
-                    <p>Upload episodes in zip file where there will for each episode folder with the number and inside photos of the episode.</p>
-                    <input type="file" name="episodes" accept=".zip" onClick={handleFileChange} />
+                    <p>Upload episodes in zip file where each episode mus be in folder and inside photos of the episode.</p>
+                    <input type="file" name="episodes" accept=".zip" onChange={handleFileChange} />
                 </div>
                 <button type='submit' onClick={handleMangaAdd}>Save</button>
             </div>
