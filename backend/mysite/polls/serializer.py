@@ -11,6 +11,17 @@ class MangaSerializer(serializers.ModelSerializer):
         model = Manga
         fields = ['id', 'name', 'description', 'chapter_amount', 'author']
 
+class PhotoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Photo
+        fields = ['id_integer', 'title', 'file_path', 'mangaid']
+
+class ChaptersSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Chapters
+        fields = ['id','mangaid', 'chapter_path']
 
 # class FullMangaSerializer(serializers.Serializer):
     

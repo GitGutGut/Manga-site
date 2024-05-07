@@ -2,7 +2,7 @@ import zipfile
 from io import BytesIO
 from rest_framework.response import Response
 from rest_framework import status
-
+from .serializer import *
 
 def addPhoto(photo, mangaName):
     dirName = '../photo/'+ mangaName +'.jpg'
@@ -21,18 +21,16 @@ def addEpisodes(zipFile, mangaName):
     dirName = '../episodes/' + mangaName
 
     try:
-        
         with zipfile.ZipFile(zipFile, 'r') as zip:
             zip.extractall(dirName)
-
         return dirName
+    
     except Exception as e:
         return Response(e, status=status.HTTP_409_CONFLICT)
 
 
 def addMangaToServer(zipFile, photo, mangaSerializer):
-    mangaName = mangaSerializer.data.get('name')
-    mangaId = mangaSerializer.data.get('id')
+    mangaName = mangaSerializer.name
 
     photoDir = addPhoto(photo, mangaName)
     episodesDir = addEpisodes(zipFile, mangaName)
@@ -40,4 +38,22 @@ def addMangaToServer(zipFile, photo, mangaSerializer):
     return photoDir, episodesDir
 
 
+def createPhotoAndChapter(photoDir, chapterDir, mangaInstance):
+    photoData = {
+    'title': mangaInstance.name,
+    'file_path': photoDir,
+    'mangaid': mangaInstance.id}
+    chaptersData = {
+        'mangaid': mangaInstance.id,
+        'chapter_path' : chapterDir
+    }
+
+    photoSerializer = PhotoSerializer(data=photoData)
+    chapterSerializer = ChaptersSerializer(data=chaptersData)
+
+    if photoSerializer.is_valid():
+        photoSerializer.save()
+    if chapterSerializer.is_valid():
+        chapterSerializer.save()
     
+
