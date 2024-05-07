@@ -6,55 +6,49 @@ import re
 
 
 class MangaSerializer(serializers.ModelSerializer):
-
-    def create(self, data):
-        return super.create(data)
-
-    def get(self, data,new_data):
-        pass
     
     class Meta:
         model = Manga
-        fields = ['name', 'description', 'chapter_amount', 'author']
+        fields = ['id', 'name', 'description', 'chapter_amount', 'author']
 
 
-class FullMangaSerializer(serializers.Serializer):
+# class FullMangaSerializer(serializers.Serializer):
     
-    manga_name = serializers.CharField(max_length=255, allow_blank=True, allow_null=True)
-    manga_description = serializers.CharField(max_length=255, allow_blank=True, allow_null=True)
-    manga_chapter_amount = serializers.IntegerField(allow_null=True)
-    manga_author = serializers.CharField(max_length=255, allow_blank=True, allow_null=True)
-    chapter_path = serializers.CharField(max_length=255, allow_blank=True, allow_null=True)
-    photo_file_path = serializers.CharField(max_length=255, allow_blank=True, allow_null=True)
+#     manga_name = serializers.CharField(max_length=255, allow_blank=True, allow_null=True)
+#     manga_description = serializers.CharField(max_length=255, allow_blank=True, allow_null=True)
+#     manga_chapter_amount = serializers.IntegerField(allow_null=True)
+#     manga_author = serializers.CharField(max_length=255, allow_blank=True, allow_null=True)
+#     chapter_file = serializers.FileField()
+#     manga_photo = serializers.ImageField()
 
-    def create(self, data):
-        mangaName = data['name']
-        description = data['description']
-        chapterAmount = data['chapter_amount']
-        author = data['author']
-        photoPath = data['photo_path']
-        chaptersPath = data['chapters_path']
+#     def create(self, data):
+#         mangaName = data['name']
+#         description = data['description']
+#         chapterAmount = data['chapter_amount']
+#         author = data['author']
+#         photoPath = data['photo_path']
+#         chaptersPath = data['chapters_path']
 
-        with transaction.atomic():
-            manga_instance = Manga.objects.create(
-                name=mangaName,
-                description=description,
-                chapter_amount=chapterAmount,
-                author=author
-            )
+#         with transaction.atomic():
+#             manga_instance = Manga.objects.create(
+#                 name=mangaName,
+#                 description=description,
+#                 chapter_amount=chapterAmount,
+#                 author=author
+#             )
 
-            photo_instance = Photo.objects.create(
-                title=mangaName,  
-                file_path=photoPath,
-                mangaid=manga_instance.id 
-            )
+#             photo_instance = Photo.objects.create(
+#                 title=mangaName,  
+#                 file_path=photoPath,
+#                 mangaid=manga_instance.id 
+#             )
 
-            chapters_amount = Chapters.objects.create(
-                mangaid = manga_instance.id,
-                chapters_path=chaptersPath
-            )
+#             chapters_amount = Chapters.objects.create(
+#                 mangaid = manga_instance.id,
+#                 chapters_path=chaptersPath
+#             )
         
-        return manga_instance.id
+#         return manga_instance.id
 
 
 class UserSerializer(serializers.ModelSerializer):

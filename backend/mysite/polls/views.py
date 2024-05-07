@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializer import *
+from .addManga import addMangaToServer
 # Create your views here.
 
 class MangaAPI(APIView):
@@ -13,6 +14,24 @@ class MangaAPI(APIView):
         Return the list of all manga
         """
         pass
+
+    def post(self, request):
+        """
+        Send new manga
+        """
+        
+        photo = request.FILES.get('photo')
+        zipFile = request.FILES.get('episodes')
+        request.data.pop('photo')
+        request.data.pop('episodes')
+        mangaSerializer = MangaSerializer(data=request.data)
+        if mangaSerializer.is_valid():
+            photoDir, episodesDir = addMangaToServer(zipFile, photo, mangaSerializer)
+
+        
+
+        return Response("something", status=status.HTTP_201_CREATED)
+
 
 class UserRegistration(APIView):
     
