@@ -7,7 +7,6 @@ from .serializer import *
 def addPhoto(photo, mangaName):
     dirName = 'static/photos/'+ mangaName +'.jpg'
     try:
-        print("what")
         with open(dirName, 'wb') as photo_destination:
             for chunk in photo.chunks():
                 photo_destination.write(chunk)
@@ -15,7 +14,7 @@ def addPhoto(photo, mangaName):
         return dirName
     
     except Exception as e:
-        return  Response("Error in saving photo", status=status.HTTP_409_CONFLICT)
+        return  Response(e, status=status.HTTP_409_CONFLICT)
 
 
 def addEpisodes(zipFile, mangaName):

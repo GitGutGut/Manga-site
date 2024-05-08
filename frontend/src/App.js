@@ -4,6 +4,8 @@ import Home from "./home";
 import Login from "./login";
 import { AuthProvider } from './authContext';
 import AddManga from './addManga';
+import ViewManga from './viewManga';
+import ViewChapter from './viewChapter';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
               <Route exact path="/register" element={<Register />} />
               <Route exact path='/login' element={<Login />} />
               <Route exact path='/addManga' element={<AddManga />} />
+              <Route exact path='/manga/:mangaId' element={<ViewManga />} />
+              <Route exact path='/manga/:mangaId/:episode' element={<ViewChapter />} />
             </Routes>
           </div>
           <div className="component">

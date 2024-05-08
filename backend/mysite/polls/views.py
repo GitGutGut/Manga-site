@@ -6,9 +6,10 @@ from rest_framework.response import Response
 from .serializer import *
 from django.conf import settings
 from .addManga import addMangaToServer, createPhotoAndChapter
+from .getPaths import getAllFilePaths
 import os
 
-
+#NOT USED MAYBE DELETE LATER IF IT IS NOT BETTER FOR IMPLEMENTATION
 class ObtainURLphoto(APIView):
     def get(self, request):
         """
@@ -20,7 +21,39 @@ class ObtainURLphoto(APIView):
         url = os.path.join(settings.STATIC_ROOT, photoURL.replace('/','\\'))
         return Response(url, status=status.HTTP_201_CREATED)
 
+class ChapterApi(APIView):
+    def get(self,request):
+        mangaId = request.query_params.get('id')
+        chapters = Chapters.objects.get(mangaid=mangaId)
+        paths = getAllFilePaths(chapters.chapter_path)
+        data = {
+            "file_paths": paths
+        }
+        return Response(data, status=status.HTTP_201_CREATED)
+
+class MangaDataAPI(APIView):
+    def get(self, request):
+        """
+        Return manga and its chapters
+        """
+        mangaId = request.query_params.get('id')
+        manga = Manga.objects.get(id=mangaId)
+        if manga is None:
+            return Response("It does not exist", status=status.HTTP_204_NO_CONTENT)
         
+        chaptersPath = Chapters.objects.get(mangaid=mangaId).chapter_path
+        photoPath = Photo.objects.get(mangaid=mangaId).file_path
+
+        data = {
+            'id': manga.id,
+            'name': manga.name,
+            'description':manga.description,
+            'author': manga.author,
+            'chapterAmount': manga.chapter_amount,
+            'chapterPath': chaptersPath,
+            'photoPath': photoPath,
+        }
+        return Response(data, status=status.HTTP_200_OK)
 
 
 class MangaAPI(APIView):
@@ -52,7 +85,7 @@ class MangaAPI(APIView):
             
         createPhotoAndChapter(photoDir, episodesDir, mangaInstance)
 
-        return Response("something", status=status.HTTP_201_CREATED)
+        return Response("Created new manga.", status=status.HTTP_201_CREATED)
 
 
 class UserRegistration(APIView):

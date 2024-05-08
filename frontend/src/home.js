@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Navbar from "./navbar";
 import { useAuth } from './authContext';
 import axios from "axios";
+import { Link } from 'react-router-dom';
 
 const Home = () => {
     const [mangaData, setmangaData] = useState([])
@@ -33,6 +34,10 @@ const Home = () => {
         const jpg = ".jpg"
         return base + name + jpg
     }
+    
+    const handleClick = (mangaId) => {
+        
+    }
 
     return (
 
@@ -43,7 +48,9 @@ const Home = () => {
 
                 {mangaData.map((manga, index) => (
                     <div className="Manga" key={manga.id}>
-                        <img src={createPhotoURL(manga.name)} alt="WOT" />
+                        <Link to={`/manga/${manga.id}`}>
+                        <img src={createPhotoURL(manga.name)} alt="Button Image" />
+                        </Link>
                         <div className="MangaDetails">
                             <div className="MangaTitle">{manga.name}</div>
                             <div className="MangaChapter">
