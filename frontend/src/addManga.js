@@ -41,6 +41,7 @@ const AddManga = () => {
     const handleMangaAdd = async (e) => {
         e.preventDefault();
         console.log('Form submitted:', mangaInformation);
+
         await axios.post("http://localhost:8000/polls/manga-api/",
             mangaInformation, {
             headers: {

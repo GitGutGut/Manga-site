@@ -4,10 +4,23 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializer import *
+from django.conf import settings
 from .addManga import addMangaToServer, createPhotoAndChapter
+import os
 
 
+class ObtainURLphoto(APIView):
+    def get(self, request):
+        """
+        Return the photo of the manga
+        """
+        mangaid = request.query_params.get('id')
+        photo = Photo.objects.get(mangaid= mangaid)
+        photoURL = photo.file_path[7:]
+        url = os.path.join(settings.STATIC_ROOT, photoURL.replace('/','\\'))
+        return Response(url, status=status.HTTP_201_CREATED)
 
+        
 
 
 class MangaAPI(APIView):
@@ -16,7 +29,9 @@ class MangaAPI(APIView):
         """
         Return the list of all manga
         """
-        pass
+        mangaList = Manga.objects.all()
+        mangaSerializer = MangaSerializer(mangaList, many=True)
+        return Response(mangaSerializer.data, status=status.HTTP_202_ACCEPTED)
 
     def post(self, request):
         """
@@ -32,6 +47,8 @@ class MangaAPI(APIView):
         if mangaSerializer.is_valid():
             mangaInstance = mangaSerializer.save()
             photoDir, episodesDir = addMangaToServer(zipFile, photo, mangaInstance)
+        else:
+            return Response("ALREADY CREATED", status=status.HTTP_409_CONFLICT)
             
         createPhotoAndChapter(photoDir, episodesDir, mangaInstance)
 
@@ -54,7 +71,7 @@ class UserLogin(APIView):
     def post(self, request):
         email = request.data.get('e_mail')
         password = request.data.get('password')
-        
+
         try:
             user = User.objects.get(e_mail=email)
 

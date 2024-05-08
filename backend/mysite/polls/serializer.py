@@ -11,6 +11,13 @@ class MangaSerializer(serializers.ModelSerializer):
         model = Manga
         fields = ['id', 'name', 'description', 'chapter_amount', 'author']
 
+    def validate_name(self, value):
+        if Manga.objects.filter(name=value).exists():
+            raise serializers.ValidationError("Manga already exists")
+        return value
+
+
+
 class PhotoSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -22,45 +29,6 @@ class ChaptersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Chapters
         fields = ['id','mangaid', 'chapter_path']
-
-# class FullMangaSerializer(serializers.Serializer):
-    
-#     manga_name = serializers.CharField(max_length=255, allow_blank=True, allow_null=True)
-#     manga_description = serializers.CharField(max_length=255, allow_blank=True, allow_null=True)
-#     manga_chapter_amount = serializers.IntegerField(allow_null=True)
-#     manga_author = serializers.CharField(max_length=255, allow_blank=True, allow_null=True)
-#     chapter_file = serializers.FileField()
-#     manga_photo = serializers.ImageField()
-
-#     def create(self, data):
-#         mangaName = data['name']
-#         description = data['description']
-#         chapterAmount = data['chapter_amount']
-#         author = data['author']
-#         photoPath = data['photo_path']
-#         chaptersPath = data['chapters_path']
-
-#         with transaction.atomic():
-#             manga_instance = Manga.objects.create(
-#                 name=mangaName,
-#                 description=description,
-#                 chapter_amount=chapterAmount,
-#                 author=author
-#             )
-
-#             photo_instance = Photo.objects.create(
-#                 title=mangaName,  
-#                 file_path=photoPath,
-#                 mangaid=manga_instance.id 
-#             )
-
-#             chapters_amount = Chapters.objects.create(
-#                 mangaid = manga_instance.id,
-#                 chapters_path=chaptersPath
-#             )
-        
-#         return manga_instance.id
-
 
 class UserSerializer(serializers.ModelSerializer):
 

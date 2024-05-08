@@ -5,8 +5,9 @@ from rest_framework import status
 from .serializer import *
 
 def addPhoto(photo, mangaName):
-    dirName = '../photo/'+ mangaName +'.jpg'
+    dirName = 'static/photos/'+ mangaName +'.jpg'
     try:
+        print("what")
         with open(dirName, 'wb') as photo_destination:
             for chunk in photo.chunks():
                 photo_destination.write(chunk)
@@ -18,7 +19,7 @@ def addPhoto(photo, mangaName):
 
 
 def addEpisodes(zipFile, mangaName):
-    dirName = '../episodes/' + mangaName
+    dirName = 'static/episodes/' + mangaName
 
     try:
         with zipfile.ZipFile(zipFile, 'r') as zip:
