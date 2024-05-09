@@ -77,11 +77,13 @@ class MangaAPI(APIView):
         request.data.pop('episodes')
 
         mangaSerializer = MangaSerializer(data=request.data)
+        
         if mangaSerializer.is_valid():
+            
             mangaInstance = mangaSerializer.save()
             photoDir, episodesDir = addMangaToServer(zipFile, photo, mangaInstance)
         else:
-            return Response("ALREADY CREATED", status=status.HTTP_409_CONFLICT)
+            return Response(mangaSerializer.errors, status=status.HTTP_409_CONFLICT)
             
         createPhotoAndChapter(photoDir, episodesDir, mangaInstance)
 

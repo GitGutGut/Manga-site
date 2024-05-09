@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { parsePath, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Navbar from './navbar';
 
 
@@ -11,7 +11,7 @@ const Manga = () => {
 
     useEffect(() => {
         fetchMangaData();
-    }, []);
+    }, [mangaId]);
 
     const fetchMangaData = async () => {
         await axios.get("http://localhost:8000/polls/manga-data-api/", {

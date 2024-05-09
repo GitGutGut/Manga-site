@@ -1,14 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, React } from "react";
 import Navbar from "./navbar";
-import { useAuth } from './authContext';
 import axios from "axios";
 import { Link } from 'react-router-dom';
 
+
 const Home = () => {
     const [mangaData, setmangaData] = useState([])
-    const { isLoggedIn, setIsLoggedIn } = useAuth();
-    const baseUrl = process.env.REACT_APP_BACKEND_URL + "/static/photo/";
-    const jpg = ".jpg";
 
     useEffect(() => {
         fetchMangaData();
@@ -34,34 +31,34 @@ const Home = () => {
         const jpg = ".jpg"
         return base + name + jpg
     }
-    
-    const handleClick = (mangaId) => {
-        
-    }
 
     return (
 
-        <div className="home">   
-            <Navbar/>
-            
+        <div className="home">
+            <Navbar />
+
             <div className="mangaList">
 
-                {mangaData.map((manga, index) => (
+                {mangaData.length > 0 && mangaData.map((manga) => (
                     <div className="Manga" key={manga.id}>
                         <Link to={`/manga/${manga.id}`}>
-                        <img src={createPhotoURL(manga.name)} alt="Button Image" />
+                            <img src={createPhotoURL(manga.name)} alt="Nothing found" />
                         </Link>
                         <div className="MangaDetails">
                             <div className="MangaTitle">{manga.name}</div>
                             <div className="MangaChapter">
-                                <a href="/">Chapter COMING SOOn</a>
-                                <a href="/">Chapter COMING SOOn</a>
-                                <a href="/">Chapter COMING SOOn</a>
+                                {[0, 1, 2].map((item, key) => (
+                                    manga.chapter_amount - item > 0 && (
+                                        <a key={key} href={`/manga/${manga.id}/${manga.chapter_amount - item}`}>
+                                            Chapter {manga.chapter_amount - item}
+                                        </a>
+                                    )
+                                ))}
                             </div>
                         </div>
                     </div>
-                ))
-                }
+                ))}
+                {!mangaData.length && <h1>No published manga.</h1>}
 
             </div>
         </div>);

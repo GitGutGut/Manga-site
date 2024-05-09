@@ -161,13 +161,13 @@ button:hover {
   overflow: hidden; /* Keeps child elements within the bounds of the border radius */
   margin-bottom: 20px; /* Adds more space below each manga for clarity */
   padding: 10px; /* Adds padding inside each manga box */
-  width: 450px; /* Fixed width */
+  width: 425px; /* Fixed width */
   height: 180px; /* Fixed height */
   align-items: stretch; /* Align children to fill the container height */
 }
 
 .Manga img, Link {
-  width: 75%; /* Adjust width to a fixed percentage of the container */
+  width: 100%; /* Adjust width to a fixed percentage of the container */
   object-fit: cover; /* Cover the div without distorting the image */
   height: 100%; /* Make image height match the MangaDetails height */
 }
@@ -190,6 +190,7 @@ button:hover {
 }
 
 .MangaChapter {
+  justify-content: flex-start;
   margin-top: 5px;
   color: #aaa;
 }
@@ -245,7 +246,7 @@ button:hover {
   justify-content: space-around;
 }
 
-.MangaDetails h1, h2, p {
+.MangaDetails h1, h2, .MangaDetails p {
   margin: 0 0 10px 0;
   color: #fff;
 }
