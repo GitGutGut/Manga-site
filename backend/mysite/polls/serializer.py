@@ -1,6 +1,5 @@
 from .models import *
 from rest_framework import serializers
-from django.db import transaction
 import re
 
 
@@ -12,7 +11,6 @@ class MangaSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'description', 'chapter_amount', 'author']
 
     def validate_name(self, value):
-        
         if Manga.objects.filter(name=value).exists():
             raise serializers.ValidationError("Manga already exists")
         return value

@@ -1,12 +1,10 @@
-from django.shortcuts import render
 from .models import *
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializer import *
 from django.conf import settings
-from .addManga import addMangaToServer, createPhotoAndChapter
-from .getPaths import getAllFilePaths
+from .fileEditor import *
 import os
 
 #NOT USED MAYBE DELETE LATER IF IT IS NOT BETTER FOR IMPLEMENTATION
@@ -21,7 +19,32 @@ class ObtainURLphoto(APIView):
         url = os.path.join(settings.STATIC_ROOT, photoURL.replace('/','\\'))
         return Response(url, status=status.HTTP_201_CREATED)
 
-class ChapterApi(APIView):
+
+class ObtainChapter(APIView):
+    def get(self, request):
+        """
+        Obtain the images of the chapter
+        """
+        chapterId = request.query_params.get('chapterId')
+        mangaId = request.query_params.get('mangaId')
+
+        manga = Manga.objects.get(id=mangaId)
+        chapterPath = Chapters.objects.get(mangaid=mangaId).chapter_path + "/"
+        chapterPath +=   chapterId + "/"
+        chaptersPhotoList = getAllFilePaths(chapterPath)
+
+        data = {
+            'files': chaptersPhotoList,
+            'chapterPath': chapterPath,
+            'name': manga.name,
+        }
+
+        return Response(data, status=status.HTTP_202_ACCEPTED)
+
+
+
+#Used for generating chapters of manga
+class ChaptersApi(APIView):
     def get(self,request):
         mangaId = request.query_params.get('id')
         chapters = Chapters.objects.get(mangaid=mangaId)

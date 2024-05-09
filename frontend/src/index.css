@@ -330,3 +330,57 @@ button:hover {
 .Comments::-webkit-scrollbar-thumb:hover {
   background-color: white; /* Scrollbar handle color on hover */
 }
+
+.Chapter {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the title and content vertically */
+  width: 100%;
+  background-color: #1e1e1e; /* Dark background for better contrast */
+  padding: 20px 0; /* Padding top and bottom */
+}
+
+
+.Chapter h1 {
+  color: #ffffff; /* White color for the title */
+  margin-bottom: 20px; /* Space below the title */
+}
+
+.PhotoItem {
+  width: 100%; /* Slightly narrower to adjust within container */
+  max-width: 600px; /* Maximum width of each photo */
+}
+
+.LinkBox {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center; /* Centers the items horizontally */
+  align-items: center; /* Centers the items vertically */
+  background: rgb(34, 34, 34);
+  border-radius: 3px;
+  margin: 20px auto; /* Auto margins for horizontal centering */
+  padding: 10px; /* Add padding as necessary */
+  overflow: hidden;
+  max-width: 1000px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 3px;
+  width: 80%; /* Adjust width to better control the size */
+}
+
+@media only screen and (max-width: 800px) {
+  .LinkBox {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+}
+
+.LinkBox a {
+  color: grey;
+  text-decoration: none;
+  transition: color 0.1s linear 0s;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.LinkBox a:hover {
+  color: rgb(145, 63, 226);
+}

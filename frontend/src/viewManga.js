@@ -8,6 +8,7 @@ const Manga = () => {
     const { mangaId } = useParams();
     const [mangaData, setMangaData] = useState();
     const [chapterData, setChapterData] = useState();
+    
 
     useEffect(() => {
         fetchMangaData();
@@ -25,7 +26,7 @@ const Manga = () => {
             console.error(error)
         })
 
-        await axios.get("http://localhost:8000/polls/chapter-api", {
+        await axios.get("http://localhost:8000/polls/chapters-api/", {
             params: {
                 id: mangaId
             }
@@ -58,7 +59,7 @@ const Manga = () => {
                 </div>
                 <div className='ChapterList'>
                     {chapterData?.map((path, index) => (
-                        <a key={index} href={`/manga/${mangaId}/${path}`}>Chapter {index + 1}</a>
+                        <a key={index} href={`/manga/${mangaId}/${path}?chapter=${index + 1}`}>Chapter {index + 1}</a>
                     ))}
                 </div>
                 <div className='CommentsTitle'>

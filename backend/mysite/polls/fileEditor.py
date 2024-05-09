@@ -1,4 +1,4 @@
-import zipfile
+import zipfile, os
 from io import BytesIO
 from rest_framework.response import Response
 from rest_framework import status
@@ -57,3 +57,11 @@ def createPhotoAndChapter(photoDir, chapterDir, mangaInstance):
         chapterSerializer.save()
     
 
+
+def getAllFilePaths(directory):
+    file_paths = []
+
+    for file_name in os.listdir(directory):
+        file_paths.append(file_name)
+    
+    return file_paths

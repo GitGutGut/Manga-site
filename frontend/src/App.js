@@ -19,7 +19,7 @@ function App() {
               <Route exact path='/login' element={<Login />} />
               <Route exact path='/addManga' element={<AddManga />} />
               <Route exact path='/manga/:mangaId' element={<ViewManga />} />
-              <Route exact path='/manga/:mangaId/:episode' element={<ViewChapter />} />
+              <Route exact path='/manga/:mangaId/:chapterId' element={<ViewChapter />} />
             </Routes>
           </div>
           <div className="component">
