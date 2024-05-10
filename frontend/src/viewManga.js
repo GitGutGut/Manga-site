@@ -17,6 +17,12 @@ const Manga = () => {
         fetchMangaData();
     }, [mangaId]);
 
+    useEffect(() => {
+
+    }
+
+   ,[]);
+
     const fetchMangaData = async () => {
         await axios.get("http://localhost:8000/polls/manga-data-api/", {
             params: {

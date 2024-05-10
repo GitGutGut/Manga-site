@@ -8,21 +8,31 @@ function replaceString(originalString, replacementString) {
     // after that obtain the starting prefix so it can be added by the replacement.
     const length = replacementString.length;
     const prefix = originalString.slice(0, originalString.length - length);
-    
+
     // Combine the prefix, replacement string
     const modifiedString = prefix + replacementString;
-    
+
     return modifiedString;
-  }
+}
 
 const Home = () => {
     const [mangaData, setmangaData] = useState([])
+    const [filter, setFilter] = useState('')
+    const [mangaDataFiltered, setMangaDataFiltered] = useState()
 
     useEffect(() => {
         fetchMangaData();
+
     }, []);
 
+    useEffect(() => {
+        setMangaDataFiltered(mangaData.filter((manga) => manga.name.toLowerCase()
+                            .includes(filter.toLowerCase())))
+    }, [filter])
 
+    const filterChange = (filter) => {
+        setFilter(filter)
+    }
 
 
     const fetchMangaData = async () => {
@@ -32,6 +42,7 @@ const Home = () => {
         }).then(response => {
             console.log(response.data);
             setmangaData(response.data);
+            setMangaDataFiltered(response.data);
         }).catch(error => {
             console.error(error);
         }
@@ -47,11 +58,11 @@ const Home = () => {
     return (
 
         <div className="home">
-            <Navbar />
+            <Navbar filterFunc={filterChange} />
 
             <div className="mangaList">
 
-                {mangaData.length > 0 && mangaData.map((manga) => (
+                {mangaData.length > 0 && mangaDataFiltered.map((manga) => (
                     <div className="Manga" key={manga.id}>
                         <Link to={`/manga/${manga.id}`}>
                             <img src={createPhotoURL(manga.name)} alt="Nothing found" />
@@ -61,7 +72,7 @@ const Home = () => {
                             <div className="MangaChapter">
                                 {[0, 1, 2].map((item, key) => (
                                     manga.chapter_amount - item > 0 && (
-                                        <a key={key} href={`/manga/${manga.id}/${replaceString("c000",String(manga.chapter_amount - item))}/${manga.chapter_amount - item}`}>
+                                        <a key={key} href={`/manga/${manga.id}/${replaceString("c000", String(manga.chapter_amount - item))}/${manga.chapter_amount - item}`}>
                                             Chapter {manga.chapter_amount - item}
                                         </a>
                                     )
@@ -70,8 +81,8 @@ const Home = () => {
                         </div>
                     </div>
                 ))}
-                {!mangaData.length && <h1>No published manga.</h1>}
-
+                {!mangaData.length && !mangaDataFiltered.length && <h1>No published manga.</h1>}
+                {!mangaDataFiltered.length && <h1>Nothing found.</h1>}
             </div>
         </div>);
 }

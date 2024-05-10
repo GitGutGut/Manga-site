@@ -1,10 +1,16 @@
 import { useAuth } from './authContext';
+import { useState } from 'react';
 
-const Navbar = () => {
+const Navbar = ({ filterFunc }) => {
     const { authData, updateAuthData } = useAuth();
+    const [filter, setFilter] = useState('');
 
-    const handleLogout = (e) => {
+    const handleLogout = () => {
         updateAuthData({ isLoggedIn: false, isAdministrator: false })
+    }
+    const sendFilter = (event) => {
+        setFilter(event.target.value);
+        filterFunc(event.target.value);
     }
 
     return (
@@ -25,7 +31,9 @@ const Navbar = () => {
                 )}
             </div>
             <div className="main_menu">
-                <input></input>
+                {filterFunc && <input className="SearchBar"
+                    placeholder='Search'
+                    onChange={sendFilter}></input>}
                 <a href="/">Manga_site.eu</a>
             </div>
 
