@@ -10,4 +10,5 @@ urlpatterns = [
     path('obtain-photo-url/', ObtainURLphoto.as_view(), name='obtain-photo-url'),
     path('chapters-api/', ChaptersApi.as_view(), name='chapters-api'),
     path('obtain-chapter/', ObtainChapter.as_view(), name="obtain-chapter"),
+    path('change-chapter/', changeChapter.as_view(), name="change-chapter"),
 ]

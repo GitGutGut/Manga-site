@@ -19,6 +19,40 @@ class ObtainURLphoto(APIView):
         url = os.path.join(settings.STATIC_ROOT, photoURL.replace('/','\\'))
         return Response(url, status=status.HTTP_201_CREATED)
 
+       
+
+
+def checkArrayLimits(currIndex, chaptersList):
+    if len(chaptersList) - 1 == currIndex:
+        nextChapter = None
+    else:
+        nextChapter = chaptersList[currIndex + 1]
+
+    if currIndex == 0:
+        prevChapter = None
+    else:
+        prevChapter = chaptersList[currIndex - 1]
+    
+    return nextChapter, prevChapter
+    
+class changeChapter(APIView):
+    def get(self, request):
+        """
+        Get the path to another 
+        """
+        mangaId = request.query_params.get('id')
+        currentChapter = int(request.query_params.get('i')) - 1
+        chapterPath = Chapters.objects.get(mangaid=mangaId).chapter_path
+        chaptersList = getAllFilePaths(chapterPath)
+        nextChapter, prevChapter = checkArrayLimits(currentChapter, chaptersList)
+        
+
+        data= {
+            'nextChapter': nextChapter,
+            'prevChapter': prevChapter,
+        }
+
+        return Response(data, status=status.HTTP_200_OK)
 
 class ObtainChapter(APIView):
     def get(self, request):
@@ -54,6 +88,7 @@ class ChaptersApi(APIView):
         }
         return Response(data, status=status.HTTP_201_CREATED)
 
+
 class MangaDataAPI(APIView):
     def get(self, request):
         """
@@ -80,6 +115,18 @@ class MangaDataAPI(APIView):
 
 
 class MangaAPI(APIView):
+    
+    def delete(self,request):
+        """
+        Delete the manga
+        """
+        mangaId = request.query_params.get('id')
+        manga = Manga.objects.filter(id=mangaId).get()
+        if manga is None:
+            return Response("Not found manga", status=status.HTTP_404_NOT_FOUND)
+        deleteFiles(manga)
+        return Response("", status=status.HTTP_204_NO_CONTENT)
+
     
     def get(self, request):
         """

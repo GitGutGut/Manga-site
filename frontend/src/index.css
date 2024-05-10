@@ -39,7 +39,15 @@ code {
   padding: 10px;
 }
 
-.navbar a,
+.navbar a{
+  transition: color 0.1s linear 0s;
+  font-size: 20px;
+  font-family: fantasy;
+  text-decoration: none;
+  padding: 6px;
+  color: black;
+}
+
 button {
   font-size: 20px;
   font-family: fantasy;
@@ -48,7 +56,7 @@ button {
   color: black;
 }
 
-.navbar .links button {
+.links button {
   background-color: #444444;
   border: none;
 }
@@ -224,6 +232,60 @@ button:hover {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
+.AdministratorFunc{
+  margin-left: auto;
+  display:flex
+}
+
+.AdministratorFunc button{
+  border-radius: 10px;
+  margin: 5px;
+  transition: background-color 0.1s linear 0s;
+}
+.Update, .Confirm{
+  background-color: green;
+  background-size: fixed;
+}
+
+.Delete, .Cancel{
+  background-color: red;
+  
+}
+
+.Update:hover, .Confirm:hover{
+  background-color: darkgreen;
+}
+
+.Delete:hover, .Cancel:hover{
+  background-color: darkred;
+}
+
+.PopUp {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 5px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.PopUpContent{
+  display:flex;
+  position: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ConfirmationButtons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+}
+
+
 .MangaContent { /* New class for holding image and details side-by-side */
   display: flex;
   width: 100%;
@@ -340,6 +402,15 @@ button:hover {
   padding: 20px 0; /* Padding top and bottom */
 }
 
+.EndChapter{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.EndChapter h1{
+  color: white;
+  margin-top: 10px;
+}
 
 .Chapter h1 {
   color: #ffffff; /* White color for the title */
@@ -357,7 +428,7 @@ button:hover {
   justify-content: center; /* Centers the items horizontally */
   align-items: center; /* Centers the items vertically */
   background: rgb(34, 34, 34);
-  border-radius: 3px;
+  border-radius: 5px;
   margin: 20px auto; /* Auto margins for horizontal centering */
   padding: 10px; /* Add padding as necessary */
   overflow: hidden;
@@ -382,5 +453,21 @@ button:hover {
 }
 
 .LinkBox a:hover {
-  color: rgb(145, 63, 226);
+  color: green;
+}
+
+.ChapterMover{
+  display:flex;
+  justify-content: right;  
+
+}
+
+.ChapterMover button{
+  border: #1e1e1e;
+  border-radius: 10px;
+  font-size: 20px;
+  transition: background-color 0.1s linear 0s;
+}
+.ChapterMover button:hover{
+  background-color: green;
 }

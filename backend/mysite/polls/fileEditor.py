@@ -1,5 +1,4 @@
-import zipfile, os
-from io import BytesIO
+import zipfile, os, shutil
 from rest_framework.response import Response
 from rest_framework import status
 from .serializer import *
@@ -65,3 +64,23 @@ def getAllFilePaths(directory):
         file_paths.append(file_name)
     
     return file_paths
+
+def deletePhoto(photo):
+    os.remove(photo.file_path)
+    photo.delete()
+
+def deleteChapters(chapters):
+    shutil.rmtree(chapters.chapter_path)
+    chapters.delete()
+
+
+def deleteFiles(manga):
+    chapters = Chapters.objects.get(mangaid=manga.id)
+    photo = Photo.objects.get(mangaid=manga.id)
+
+    deleteChapters(chapters)
+    deletePhoto(photo)
+
+    manga.delete()
+
+    

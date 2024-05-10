@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from './navbar';
-import { Link, Navigate } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from './authContext';
 
 const AddManga = () => {
     const [mangaInformation, setMangaInformation] = useState({

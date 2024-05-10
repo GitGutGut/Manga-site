@@ -2,13 +2,16 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from './navbar';
-
+import { useAuth } from './authContext';
+import PopUpWindows from './popUpWindow.js';
 
 const Manga = () => {
     const { mangaId } = useParams();
     const [mangaData, setMangaData] = useState();
     const [chapterData, setChapterData] = useState();
-    
+    const { authData, updateAuthData } = useAuth();
+    const [isOpen, setIsOpen] = useState(false);
+
 
     useEffect(() => {
         fetchMangaData();
@@ -40,10 +43,19 @@ const Manga = () => {
     }
 
 
+
     return (
         <div className='MangaSite'>
             <Navbar />
             <div className='MangaView'>
+                
+                {authData.isAdministrator &&
+                    <div className='AdministratorFunc'>
+                                
+                        <button className='Update' type='button' onClick={"Transfer to update page"}>Update</button>
+                        <PopUpWindows/>
+
+                    </div>}
                 <div className='MangaContent'>
                     <img src={`http://localhost:8000/${mangaData?.photoPath}`}
                         alt={mangaData?.name} className="MangaImage" />
@@ -59,7 +71,7 @@ const Manga = () => {
                 </div>
                 <div className='ChapterList'>
                     {chapterData?.map((path, index) => (
-                        <a key={index} href={`/manga/${mangaId}/${path}?chapter=${index + 1}`}>Chapter {index + 1}</a>
+                        <a key={index} href={`/manga/${mangaId}/${path}/${index + 1}`}>Chapter {index + 1}</a>
                     ))}
                 </div>
                 <div className='CommentsTitle'>
