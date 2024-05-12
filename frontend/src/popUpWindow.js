@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-function PopUpWindow() {
+const PopUpWindow = ()  => {
     const [isOpen, setIsOpen] = useState(false);
     const { mangaId } = useParams();
     const navigate = useNavigate();

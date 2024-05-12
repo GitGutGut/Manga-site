@@ -9,8 +9,7 @@ const Manga = () => {
     const { mangaId } = useParams();
     const [mangaData, setMangaData] = useState();
     const [chapterData, setChapterData] = useState();
-    const { authData, updateAuthData } = useAuth();
-    const [isOpen, setIsOpen] = useState(false);
+    const { authData } = useAuth();
 
 
     useEffect(() => {
@@ -21,7 +20,7 @@ const Manga = () => {
 
     }
 
-   ,[]);
+        , []);
 
     const fetchMangaData = async () => {
         await axios.get("http://localhost:8000/polls/manga-data-api/", {
@@ -54,12 +53,13 @@ const Manga = () => {
         <div className='MangaSite'>
             <Navbar />
             <div className='MangaView'>
-                
+
                 {authData.isAdministrator &&
                     <div className='AdministratorFunc'>
-                                
-                        <button className='Update' type='button' onClick={"Transfer to update page"}>Update</button>
-                        <PopUpWindows/>
+                        <a href={`/manga/${mangaId}/update`}>
+                        <button className='UpdateButton' type='button' onClick={console.log("sendToUpdate")}>Update</button>
+                        </a>
+                        <PopUpWindows />
 
                     </div>}
                 <div className='MangaContent'>
@@ -69,9 +69,16 @@ const Manga = () => {
                         <h1>{mangaData?.name}</h1>
                         <h2>Author: {mangaData?.author}</h2>
                         <h2>Chapters: {mangaData?.chapterAmount}</h2>
-                        <p>Description: {mangaData?.description}</p>
+                        <div className='TagTemplate'>
+                            <h2>Tags: </h2>
+                            {mangaData?.tags.map((tag, index) => (
+                                    <button key={index} className='tagButton'>{tag}</button>
+                            ))}
+                        </div>
+                        <p><b>Description:</b> {mangaData?.description}</p>
                     </div>
                 </div>
+
                 <div className='ChapterTitle'>
                     <h3>Chapters</h3>
                 </div>

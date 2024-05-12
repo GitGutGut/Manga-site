@@ -74,7 +74,10 @@ button {
 .navbar a:hover {
   color: green;
 }
-
+.register h2,
+.login h2{
+  color:#1e1e1e;
+}
 .home .register {
   display: flex;
   flex-direction: column;
@@ -91,7 +94,7 @@ button {
   height: auto;
 }
 
-.mainContent, .register, .login {
+.mainContent, .register, .login, .Update {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
@@ -107,12 +110,45 @@ button {
 .mangaName,
 .authorName,
 .Description,
-.tags,
 .chapterAmount,
 .episodes,
 .photoUpload {
   display: flex;
   flex-direction: column;
+}
+
+.UpdateMangaButton{
+  display: block;
+  margin: auto;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 10px;
+  border-color: black;
+  transition: background-color 0.1s linear 0s;
+}
+
+.tags {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(120px, 1fr));
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;         /* Vertical scroll */
+  max-height: 150px;        /* Fixed height with scrolling */
+  padding: 10px;            /* Padding inside the container */
+  margin: 10px 0;           /* Margin around the container */
+  border: 1px solid #ccc;   /* Border for visibility */
+  background-color: #f8f9fa; /* Light background for the tags area */
+}
+
+.tagButton {
+  background-color: #666;    /* Button background */
+  border: none;              /* No border */
+  color: white;              /* Text color */
+  font-size: 0.85rem;         /* Slightly smaller font size */
+  padding: 5px 10px;         /* Padding inside the button */
+  margin: 1px;               /* Margin around the button */
+  cursor: pointer;           /* Cursor pointer */
+  border-radius: 10px;
 }
 
 label {
@@ -157,18 +193,25 @@ button:hover {
 }
 .mangaList {
   display: grid;
+  justify-content: center;
   grid-template-columns: repeat(2, 1fr); /* Two columns */
-  grid-gap: 20px;
+  grid-gap: 10px;
+  align-items: center;
   max-width: 1100px;
-  margin: 40px auto;
+  margin: auto;
   padding: 20px;
   background: #2c2c2c;
   border-radius: 8px;
   box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+  flex-wrap: wrap;
+  
 }
+
+
 
 .Manga {
   display: flex;
+  justify-content: center;
   background: #1e1e1e;
   border-radius: 4px;
   transition: transform 0.5s ease, box-shadow 0.5s ease;
@@ -248,7 +291,7 @@ button:hover {
   margin: 5px;
   transition: background-color 0.1s linear 0s;
 }
-.Update, .Confirm{
+.UpdateButton, .Confirm{
   background-color: green;
   background-size: fixed;
 }
@@ -258,7 +301,7 @@ button:hover {
   
 }
 
-.Update:hover, .Confirm:hover{
+.UpdateButton:hover, .Confirm:hover{
   background-color: darkgreen;
 }
 
@@ -377,25 +420,29 @@ button:hover {
 }
 
 .ChapterList::-webkit-scrollbar,
-.Comments::-webkit-scrollbar {
+.Comments::-webkit-scrollbar,
+.tags::-webkit-scrollbar
+ {
   width: 12px; /* Scrollbar width */
 }
 
 .ChapterList::-webkit-scrollbar-track,
-.Comments::-webkit-scrollbar-track {
-  background: black; /* Scrollbar track color */
+.Comments::-webkit-scrollbar-track,
+.tags::-webkit-scrollbar-track {
+  background: #666; /* Scrollbar track color */
   border-radius: 4px;
 }
 
 .ChapterList::-webkit-scrollbar-thumb,
-.Comments::-webkit-scrollbar-thumb {
-  background-color: #666; /* Scrollbar handle color */
+.Comments::-webkit-scrollbar-thumb,
+.tags::-webkit-scrollbar-thumb {
+  background-color: #444; /* Scrollbar handle color */
   border-radius: 4px;
-  border: 2px solid #2c2c2c; /* Optional: adds a border around the scrollbar */
 }
 
 .ChapterList::-webkit-scrollbar-thumb:hover,
-.Comments::-webkit-scrollbar-thumb:hover {
+.Comments::-webkit-scrollbar-thumb:hover, 
+.tags::-webkit-scrollbar-thumb:hover{
   background-color: white; /* Scrollbar handle color on hover */
 }
 

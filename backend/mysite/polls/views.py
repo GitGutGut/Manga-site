@@ -5,22 +5,6 @@ from rest_framework.response import Response
 from .serializer import *
 from django.conf import settings
 from .fileEditor import *
-import os
-
-#NOT USED MAYBE DELETE LATER IF IT IS NOT BETTER FOR IMPLEMENTATION
-class ObtainURLphoto(APIView):
-    def get(self, request):
-        """
-        Return the photo of the manga
-        """
-        mangaid = request.query_params.get('id')
-        photo = Photo.objects.get(mangaid= mangaid)
-        photoURL = photo.file_path[7:]
-        url = os.path.join(settings.STATIC_ROOT, photoURL.replace('/','\\'))
-        return Response(url, status=status.HTTP_201_CREATED)
-
-       
-
 
 def checkArrayLimits(currIndex, chaptersList):
     if len(chaptersList) - 1 == currIndex:
@@ -88,8 +72,27 @@ class ChaptersApi(APIView):
         }
         return Response(data, status=status.HTTP_201_CREATED)
 
+class UpdateManga(APIView):
+    def post(self, request):
+        """
+        Use for updating a manga from the requested manga id
+        """
+        print(request.data)
+        chapterFile = request.data.get("episodes")
+        chapterAmount = request.data.get("chapterAmount")
+        mangaId = request.data.get("mangaId")
+        
+        manga = Manga.objects.get(id=mangaId)
+        manga.chapter_amount += int(chapterAmount)
+        mangaChapterPath = Chapters.objects.get(mangaid=mangaId).chapter_path
+        
+        addEpisodes(chapterFile, mangaChapterPath)
+
+        return Response("created", status=status.HTTP_200_OK)
+
 
 class MangaDataAPI(APIView):
+
     def get(self, request):
         """
         Return manga and its chapters
@@ -98,7 +101,7 @@ class MangaDataAPI(APIView):
         manga = Manga.objects.get(id=mangaId)
         if manga is None:
             return Response("It does not exist", status=status.HTTP_204_NO_CONTENT)
-        
+        print(manga.tags)
         chaptersPath = Chapters.objects.get(mangaid=mangaId).chapter_path
         photoPath = Photo.objects.get(mangaid=mangaId).file_path
 
@@ -110,11 +113,29 @@ class MangaDataAPI(APIView):
             'chapterAmount': manga.chapter_amount,
             'chapterPath': chaptersPath,
             'photoPath': photoPath,
+            'tags': manga.tags
         }
         return Response(data, status=status.HTTP_200_OK)
 
 
 class MangaAPI(APIView):
+        
+    def patch(self, request):
+        """
+        Use for updating a manga from the requested manga id
+        """
+        
+        chapterFile = request.FILES.get("episodes")
+        mangaId = request.data.get("mangaId")
+        chapterAmount = request.data.get("chapter_amount")
+        manga = Manga.objects.get(id=mangaId)
+        manga.chapter_amount += int(chapterAmount)
+        manga.save()
+
+        mangaChapterPath = Chapters.objects.get(mangaid=mangaId).chapter_path
+    
+        UpdateEpisodes(chapterFile, mangaChapterPath)
+        return Response("created", status=status.HTTP_200_OK)
     
     def delete(self,request):
         """
@@ -145,9 +166,14 @@ class MangaAPI(APIView):
         zipFile = request.FILES.get('episodes')
         request.data.pop('photo')
         request.data.pop('episodes')
+        
+        if 'tags[]' in request.data:
+            request.data.setlist('tags', request.data.getlist('tags[]'))
+            request.data.pop('tags[]')
+        request.data._mutable = False 
 
         mangaSerializer = MangaSerializer(data=request.data)
-        
+
         if mangaSerializer.is_valid():
             
             mangaInstance = mangaSerializer.save()

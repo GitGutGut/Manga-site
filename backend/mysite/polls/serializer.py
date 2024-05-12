@@ -5,12 +5,18 @@ import re
 
 
 class MangaSerializer(serializers.ModelSerializer):
-    
+    tags = serializers.ListField(
+        child=serializers.CharField(max_length=100),  # Adjust max_length as necessary
+        allow_empty=True,  # Allow empty list
+        required=False     # Make tags optional
+    )
     class Meta:
         model = Manga
-        fields = ['id', 'name', 'description', 'chapter_amount', 'author']
+        fields = ['id', 'name', 'description', 'chapter_amount', 'author', 'tags']
 
     def validate_name(self, value):
+        if value == '':
+            raise serializers.ValidationError("Needs to have a name")
         if Manga.objects.filter(name=value).exists():
             raise serializers.ValidationError("Manga already exists")
         return value

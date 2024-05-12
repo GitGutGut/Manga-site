@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from './navbar';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from './authContext';
 
@@ -51,7 +51,7 @@ const Login = () => {
             <Navbar />
             {authData.isLoggedIn ? (
                 <div className='login'>
-                    <h2>Welcome! You are logged in.</h2>
+                    <h1>Welcome! You are logged in.</h1>
                 </div>
             ) : (
                 <div className='login'>

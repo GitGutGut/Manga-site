@@ -18,7 +18,7 @@ function replaceString(originalString, replacementString) {
 const Home = () => {
     const [mangaData, setmangaData] = useState([])
     const [filter, setFilter] = useState('')
-    const [mangaDataFiltered, setMangaDataFiltered] = useState()
+    const [mangaDataFiltered, setMangaDataFiltered] = useState([])
 
     useEffect(() => {
         fetchMangaData();
@@ -27,7 +27,7 @@ const Home = () => {
 
     useEffect(() => {
         setMangaDataFiltered(mangaData.filter((manga) => manga.name.toLowerCase()
-                            .includes(filter.toLowerCase())))
+            .includes(filter.toLowerCase())))
     }, [filter])
 
     const filterChange = (filter) => {
@@ -62,15 +62,17 @@ const Home = () => {
 
             <div className="mangaList">
 
-                {mangaData.length > 0 && mangaDataFiltered.map((manga) => (
+                {mangaDataFiltered.length > 0 && mangaDataFiltered.map((manga) => (
                     <div className="Manga" key={manga.id}>
                         <Link to={`/manga/${manga.id}`}>
                             <img src={createPhotoURL(manga.name)} alt="Nothing found" />
                         </Link>
                         <div className="MangaDetails">
-                            <div className="MangaTitle">{manga.name}</div>
+                            <div className="MangaTitle">
+                                {manga.name}
+                            </div>
                             <div className="MangaChapter">
-                                {[0, 1, 2].map((item, key) => (
+                                { [0, 1, 2].map((item, key) => (
                                     manga.chapter_amount - item > 0 && (
                                         <a key={key} href={`/manga/${manga.id}/${replaceString("c000", String(manga.chapter_amount - item))}/${manga.chapter_amount - item}`}>
                                             Chapter {manga.chapter_amount - item}

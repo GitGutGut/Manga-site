@@ -15,10 +15,15 @@ def addPhoto(photo, mangaName):
     except Exception as e:
         return  Response(e, status=status.HTTP_409_CONFLICT)
 
+def UpdateEpisodes(zipFile, path):
+    try:
+        with zipfile.ZipFile(zipFile, 'r') as zip:
+            zip.extractall(path)
+    except Exception as e:
+        return Response(e, status=status.HTTP_409_CONFLICT)
 
 def addEpisodes(zipFile, mangaName):
     dirName = 'static/episodes/' + mangaName
-
     try:
         with zipfile.ZipFile(zipFile, 'r') as zip:
             zip.extractall(dirName)
@@ -73,14 +78,12 @@ def deleteChapters(chapters):
     shutil.rmtree(chapters.chapter_path)
     chapters.delete()
 
-
 def deleteFiles(manga):
     chapters = Chapters.objects.get(mangaid=manga.id)
     photo = Photo.objects.get(mangaid=manga.id)
 
     deleteChapters(chapters)
     deletePhoto(photo)
-
     manga.delete()
 
     

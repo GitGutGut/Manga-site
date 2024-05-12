@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 
 
 class Tag(models.Model):
@@ -160,6 +161,12 @@ class Manga(models.Model):
     description = models.CharField(max_length=1000, blank=True, null=True)
     chapter_amount = models.IntegerField(blank=True, null=True)
     author = models.CharField(max_length=255, blank=True, null=True)
+    tags = ArrayField(
+        models.CharField(max_length=100, blank=True),  # Adjust the length according to the enum size
+        blank=True,
+        null=True,
+        default=list
+    )
 
     class Meta:
         managed = False

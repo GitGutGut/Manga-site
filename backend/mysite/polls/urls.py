@@ -7,7 +7,6 @@ urlpatterns = [
     path('manga-data-api/', MangaDataAPI.as_view(), name='manga-data-api'),
     path('user-registration/', UserRegistration.as_view(), name='user-registration'),
     path('user-login/', UserLogin.as_view(), name='user-login'),
-    path('obtain-photo-url/', ObtainURLphoto.as_view(), name='obtain-photo-url'),
     path('chapters-api/', ChaptersApi.as_view(), name='chapters-api'),
     path('obtain-chapter/', ObtainChapter.as_view(), name="obtain-chapter"),
     path('change-chapter/', changeChapter.as_view(), name="change-chapter"),
