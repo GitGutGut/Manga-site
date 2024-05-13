@@ -33,7 +33,7 @@ const Home = () => {
     const filterChange = (filter) => {
         setFilter(filter)
     }
-
+    
 
     const fetchMangaData = async () => {
 

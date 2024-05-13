@@ -26,7 +26,7 @@ const Login = () => {
                 }
             }
         ).then(response => {
-            updateAuthData({ isAdministrator: response.data.administrator });
+            updateAuthData({ isAdministrator: response.data.administrator , username: response.data.username});
         }).catch(error => {
             console.error("Error fetching data:", error);
         })
@@ -38,7 +38,7 @@ const Login = () => {
             formDataLogin
         ).then(response => {
             console.log('Response', response.data);
-            updateAuthData({ isLoggedIn: true, e_mail: formDataLogin.e_mail });
+            updateAuthData({ isLoggedIn: true});
             checkIfAdministrator()
 
 

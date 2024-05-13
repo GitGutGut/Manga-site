@@ -3,7 +3,6 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializer import *
-from django.conf import settings
 from .fileEditor import *
 
 def checkArrayLimits(currIndex, chaptersList):
@@ -216,5 +215,41 @@ class UserLogin(APIView):
     def get(self, request):
         e_mail = request.query_params.get('e_mail')
         user = User.objects.get(e_mail=e_mail)
-        administrator = user.administrator
-        return Response({'administrator': administrator})
+        return Response({'administrator': user.administrator, 'username':user.name})
+    
+
+class CommentAPI(APIView):
+    def post(self, request):
+
+        user = User.objects.get(name=request.data.get('username'))
+        manga = Manga.objects.get(id=request.data.get('mangaid'))
+        data = request.data.get("data")
+        data = {
+            'data': data,
+           "mangaid": manga.id,
+            "usere_mail": user.e_mail,
+        }
+        
+        commentSerializer = Commentserializer(data=data)
+        
+        if commentSerializer.is_valid():
+            commentSerializer.save()
+
+            return Response(data, status=status.HTTP_200_OK)
+        return Response("error", status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request):
+        print(request.query_params)
+        mangaId = request.query_params.get('id')
+        username = request.query_params.get('username')
+        user = User.objects.filter(name=username).get()
+
+        if user is None:
+            return Response("No object", status=status.HTTP_400_BAD_REQUEST)
+        
+        comments = Comment.objects.filter(user_email=user.e_mail, mangaid=mangaId).all()
+        commentsSerializer = Commentserializer(comments,many=True)
+        comments = commentsSerializer.data
+        for comment_data in comments:
+            comment_data['user'] = User.objects.get(e_mail=comment_data['user_email']).name
+        return Response(comments, status=status.HTTP_200_OK)

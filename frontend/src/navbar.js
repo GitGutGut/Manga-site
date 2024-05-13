@@ -29,6 +29,7 @@ const Navbar = ({ filterFunc }) => {
                         <a href="/login"> Login</a>
                     </>
                 )}
+                <b>Logged in as {authData.username}.</b>
             </div>
             <div className="main_menu">
                 {filterFunc && <input className="SearchBar"

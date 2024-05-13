@@ -103,8 +103,8 @@ class Chapters(models.Model):
 class Comment(models.Model):
     id = models.AutoField(primary_key=True)
     mangaid = models.ForeignKey('Manga', models.DO_NOTHING, db_column='mangaid')
-    usere_mail = models.ForeignKey(User, models.DO_NOTHING, db_column='Usere-mail')  # Field name made lowercase. Field renamed to remove unsuitable characters.
-
+    user_email = models.ForeignKey(User, models.DO_NOTHING, db_column='user_email')  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    data = models.CharField(max_length=255, blank=True, null=False)
     class Meta:
         managed = False
         db_table = 'comment'

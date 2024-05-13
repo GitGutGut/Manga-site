@@ -1,8 +1,14 @@
 from .models import *
 from rest_framework import serializers
+from django.contrib.auth import get_user_model
 import re
 
 
+class Commentserializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Comment
+        fields = ['id','mangaid', 'user_email', 'data']
 
 class MangaSerializer(serializers.ModelSerializer):
     tags = serializers.ListField(

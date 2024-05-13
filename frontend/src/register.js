@@ -27,7 +27,7 @@ const Register = () => {
       formDataRegister
     ).then(response => {
       console.log('Response', response.data);
-      updateAuthData({ isLoggedIn: true, e_mail: formDataRegister.e_mail })
+      updateAuthData({ isLoggedIn: true, username: formDataRegister.name })
       //TODO: after response send back to main menu
     }).catch(error => {
       //TODO: handle the errors from backend

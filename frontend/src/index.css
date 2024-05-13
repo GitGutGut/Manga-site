@@ -65,6 +65,11 @@ button {
 .links button {
   background-color: #444444;
   border: none;
+  border-radius: 10px;
+}
+.links b{
+  align-content: center;
+  padding: 10px;
 }
 
 .navbar .main_menu {
@@ -401,17 +406,68 @@ button:hover {
   color: #fff;
 }
 
-.CommentSection button {
+.Comments {
+  background-color: #333; /* Dark background for the comments box */
+  color: #ccc; /* Light gray text color for the comments */
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+  max-height: 400px; /* Adjust based on your preference */
+  overflow-y: auto; /* Allows scrolling within the comment box */
+}
+
+.comment-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0; /* Spacing between comments */
+  border-bottom: 1px solid #444; /* Slight separation between comments */
+}
+
+.comment-item:last-child {
+  border-bottom: none; /* Removes border from the last comment */
+}
+
+.user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* Circular avatar */
+  margin-right: 20px;
+  background-color: #666; /* Placeholder if no image is available */
+  background-size: cover;
+  background-position: center;
+}
+
+.comment-content {
+  flex: 1; /* Takes up remaining space */
+}
+
+.comment-author {
+  font-weight: bold;
+  color: #fff; /* White text for author name */
+}
+
+.comment-date {
+  font-size: 0.8rem;
+  color: #aaa; /* Lighter text for date */
+}
+
+.comment-text {
+  margin-top: 5px;
+  line-height: 1.4; /* Improved readability for longer comments */
+}
+.AddComment, .CommentData{
   width: 100%;
   padding: 10px;
   margin-top: 10px;
   background-color: #666;
+  border-radius: 10px;
   color: #fff;
   border: none;
   cursor: pointer;
 }
 
-.CommentSection button:hover {
+.AddComment:hover {
   background-color: #777;
 }
 .CommentsTitle, .ChapterTitle{
