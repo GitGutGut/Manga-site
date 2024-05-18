@@ -1,5 +1,5 @@
 import { useState, useEffect, React } from "react";
-import Navbar from "./navbar";
+import Navbar from "../components/navbar";
 import axios from "axios";
 import { Link } from 'react-router-dom';
 
@@ -33,7 +33,7 @@ const Home = () => {
     const filterChange = (filter) => {
         setFilter(filter)
     }
-    
+
 
     const fetchMangaData = async () => {
 
@@ -72,7 +72,7 @@ const Home = () => {
                                 {manga.name}
                             </div>
                             <div className="MangaChapter">
-                                { [0, 1, 2].map((item, key) => (
+                                {[0, 1, 2].map((item, key) => (
                                     manga.chapter_amount - item > 0 && (
                                         <a key={key} href={`/manga/${manga.id}/${replaceString("c000", String(manga.chapter_amount - item))}/${manga.chapter_amount - item}`}>
                                             Chapter {manga.chapter_amount - item}

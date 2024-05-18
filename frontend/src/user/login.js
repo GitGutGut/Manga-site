@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Navbar from './navbar';
+import Navbar from '../components/navbar';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from './authContext';
+import { useAuth } from '../components/authContext';
 
 const Login = () => {
     const [formDataLogin, setFormData] = useState({
@@ -26,7 +26,7 @@ const Login = () => {
                 }
             }
         ).then(response => {
-            updateAuthData({ isAdministrator: response.data.administrator , username: response.data.username});
+            updateAuthData({ isAdministrator: response.data.administrator, username: response.data.username });
         }).catch(error => {
             console.error("Error fetching data:", error);
         })
@@ -38,7 +38,7 @@ const Login = () => {
             formDataLogin
         ).then(response => {
             console.log('Response', response.data);
-            updateAuthData({ isLoggedIn: true});
+            updateAuthData({ isLoggedIn: true });
             checkIfAdministrator()
 
 

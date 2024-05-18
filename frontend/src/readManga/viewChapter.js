@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from 'react-router-dom';
-import Navbar from "./navbar";
+import Navbar from "../components/navbar";
 import axios from "axios";
-import ChapterButton from "./chapterButton";
+import ChapterButton from "../components/chapterButton";
 
 const Chapter = ({ }) => {
     const { mangaId, chapterId, index } = useParams();
@@ -68,7 +68,7 @@ const Chapter = ({ }) => {
                 ))}
             </div>
             <div className="EndChapter">
-            <h1>End of the chapter</h1>
+                <h1>End of the chapter</h1>
             </div>
             {nextPrevChapter && <ChapterButton
                 mangaId={mangaId}

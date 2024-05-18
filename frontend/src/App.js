@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Register from "./register";
-import Home from "./home";
-import Login from "./login";
-import { AuthProvider, useAuth } from './authContext';
-import AddManga from './addManga';
-import ViewManga from './viewManga';
-import ViewChapter from './viewChapter';
-import UpdateManga from './updateManga';
+import Register from "./user/register";
+import Home from "./readManga/home";
+import Login from "./user/login";
+import { AuthProvider, useAuth } from './components/authContext';
+import AddManga from './manga/addManga';
+import ViewChapter from './readManga/viewChapter';
+import UpdateManga from './manga/updateManga';
+import ViewManga from './manga/viewManga';
 
 function App() {
 

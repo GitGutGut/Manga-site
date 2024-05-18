@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Navbar from './navbar';
+import Navbar from '../components/navbar';
 import axios from 'axios';
-import { useAuth } from './authContext';
+import { useAuth } from '../components/authContext';
 
 const Register = () => {
   const [formDataRegister, setFormData] = useState({

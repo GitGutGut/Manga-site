@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Navbar from './navbar';
+import Navbar from '../components/navbar';
 import axios from 'axios';
-import Tags from './tags';
+import Tags from '../tags/tags';
 const AddManga = () => {
     const [mangaInformation, setMangaInformation] = useState({
         photo: null,

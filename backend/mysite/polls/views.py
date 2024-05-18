@@ -100,7 +100,6 @@ class MangaDataAPI(APIView):
         manga = Manga.objects.get(id=mangaId)
         if manga is None:
             return Response("It does not exist", status=status.HTTP_204_NO_CONTENT)
-        print(manga.tags)
         chaptersPath = Chapters.objects.get(mangaid=mangaId).chapter_path
         photoPath = Photo.objects.get(mangaid=mangaId).file_path
 
@@ -219,6 +218,15 @@ class UserLogin(APIView):
     
 
 class CommentAPI(APIView):
+    def delete(self, request):
+        """
+        Delete comment by ID
+        """
+        commentId = request.query_params.get("id")
+        comment = Comment.objects.filter(id=commentId).get()
+        comment.delete()
+        return Response("something",status=status.HTTP_200_OK)
+    
     def post(self, request):
 
         user = User.objects.get(name=request.data.get('username'))
@@ -227,19 +235,18 @@ class CommentAPI(APIView):
         data = {
             'data': data,
            "mangaid": manga.id,
-            "usere_mail": user.e_mail,
+            "user_email": user.e_mail,
         }
-        
         commentSerializer = Commentserializer(data=data)
         
         if commentSerializer.is_valid():
             commentSerializer.save()
 
             return Response(data, status=status.HTTP_200_OK)
+        print(commentSerializer.error_messages)
         return Response("error", status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
-        print(request.query_params)
         mangaId = request.query_params.get('id')
         username = request.query_params.get('username')
         user = User.objects.filter(name=username).get()

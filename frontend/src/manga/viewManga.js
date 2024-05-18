@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Navbar from './navbar';
-import { useAuth } from './authContext';
-import PopUpWindows from './popUpWindow.js';
+import Navbar from '../components/navbar.js';
+import { useAuth } from '../components/authContext.js';
+import PopUpWindows from '../components/popUpWindow.js';
 
 const Manga = () => {
     const { mangaId } = useParams();
@@ -69,7 +69,23 @@ const Manga = () => {
         await axios.post("http://localhost:8000/polls/comment-api/", comment)
             .then(response => {
                 console.log(response.data)
+                window.location.reload()
             }).catch(error => {
+                console.error(error)
+            })
+    }
+
+    const deleteComment = async (id) => {
+        axios.delete("http://localhost:8000/polls/comment-api/", {
+            params: {
+                id: id
+            }
+        })
+            .then(response => {
+                console.log(response)
+                window.location.reload()
+            }
+            ).catch(error => {
                 console.error(error)
             })
     }
@@ -79,7 +95,6 @@ const Manga = () => {
             ...comment,
             [e.target.name]: e.target.value
         })
-        console.log(comment)
     }
     return (
         <div className='MangaSite'>
@@ -125,7 +140,7 @@ const Manga = () => {
                 <div className='Comments'>
                     {comments?.map((comment) => (
                         <div className="comment-item" key={comment.id}>
-                            <div className="user-avatar" style={{ backgroundImage: `url(${comment.userAvatar})` }}></div>
+                            {authData.isAdministrator && <button className='deleteComment' onClick={() => deleteComment(comment.id)}>X</button>}
                             <div className="comment-content">
                                 <div className="comment-author">{comment.user}</div>
                                 <div className="comment-date">{comment.date}</div>

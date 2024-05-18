@@ -456,6 +456,20 @@ button:hover {
   margin-top: 5px;
   line-height: 1.4; /* Improved readability for longer comments */
 }
+.deleteComment:hover{
+  background-color: darkred;
+}
+.deleteComment {
+  background-color: red;
+  color: black;
+  font-size: 14px;
+  text-align: center;
+  border: none;
+  border-radius: 25%;
+  cursor: pointer;
+  margin-right: 5px;
+  transition: background-color 0.1s linear 0s;
+}
 .AddComment, .CommentData{
   width: 100%;
   padding: 10px;

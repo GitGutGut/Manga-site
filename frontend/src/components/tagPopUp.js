@@ -1,4 +1,4 @@
-import Tags from './tags.js';
+import Tags from '../tags/tags.js';
 
 const addTag = (name, mangaInformation, setMangaInformation, setActiveButton) => {
     setMangaInformation(prev => ({
