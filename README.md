@@ -37,7 +37,7 @@ A web application for reading and managing manga, built with Django for the back
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/username/manga-reading-site.git
+   git clone git@github.com:GitGutGut/Manga-site.git
    cd manga-reading-site/backend
    ```
 
@@ -80,18 +80,6 @@ A web application for reading and managing manga, built with Django for the back
    npm install
    ```
 
-### Docker Setup
-
-1. **Navigate to the project root directory:**
-   ```bash
-   cd ..
-   ```
-
-2. **Build and run the Docker containers:**
-   ```bash
-   docker-compose up --build
-   ```
-
 ## Running the Application
 
 ### Development Server
@@ -123,25 +111,6 @@ A web application for reading and managing manga, built with Django for the back
    npm start
    ```
 
-### Docker
-
-1. **Navigate to the project root directory:**
-   ```bash
-   cd manga-reading-site
-   ```
-
-2. **Build and run the Docker containers:**
-   ```bash
-   docker-compose up
-   ```
-
-3. **Access the application:**
-   - Frontend: `http://localhost:3000`
-   - Backend: `http://localhost:8000`
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
 
