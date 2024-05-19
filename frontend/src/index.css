@@ -30,7 +30,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+.ErrorMessage{
+  color: red;
+  font-size: large;
+}
 .navbar {
   display: flex;
   align-items: center;

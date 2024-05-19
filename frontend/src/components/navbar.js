@@ -6,7 +6,7 @@ const Navbar = ({ filterFunc }) => {
     const [filter, setFilter] = useState('');
 
     const handleLogout = () => {
-        updateAuthData({ isLoggedIn: false, isAdministrator: false })
+        updateAuthData({ isLoggedIn: false, isAdministrator: false,  username: ""})
     }
     const sendFilter = (event) => {
         setFilter(event.target.value);
@@ -29,7 +29,7 @@ const Navbar = ({ filterFunc }) => {
                         <a href="/login"> Login</a>
                     </>
                 )}
-                <b>Logged in as {authData.username}.</b>
+                {authData.username !== "" && <b>Logged in as {authData.username}.</b>}
             </div>
             <div className="main_menu">
                 {filterFunc && <input className="SearchBar"

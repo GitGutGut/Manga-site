@@ -193,7 +193,11 @@ class UserRegistration(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        firstKey =  list(serializer.errors.keys())[0]
+        print(serializer.errors[firstKey])
+        data = {"message":serializer.errors[firstKey]}
+        return Response(data, status=status.HTTP_400_BAD_REQUEST)
     
 class UserLogin(APIView):
     # User is logging to the site
@@ -254,7 +258,7 @@ class CommentAPI(APIView):
         if user is None:
             return Response("No object", status=status.HTTP_400_BAD_REQUEST)
         
-        comments = Comment.objects.filter(user_email=user.e_mail, mangaid=mangaId).all()
+        comments = Comment.objects.filter( mangaid=mangaId).all()
         commentsSerializer = Commentserializer(comments,many=True)
         comments = commentsSerializer.data
         for comment_data in comments:

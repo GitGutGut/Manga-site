@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/navbar';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -10,6 +10,11 @@ const Login = () => {
         password: ''
     });
     const { authData, updateAuthData } = useAuth();
+    const [error, setError] = useState();
+
+    useEffect(() => {
+        
+    }, [error]);
 
     const handleChange = (e) => {
         setFormData({
@@ -44,6 +49,7 @@ const Login = () => {
 
         }).catch(error => {
             console.error('Error:', error.response.data.message);
+            setError(error.response.data.message)
         })
     }
     return (
@@ -78,6 +84,7 @@ const Login = () => {
                     </div>
                     <Link to='/register' className='register_link'>Not logged in?</Link>
                     <button type="submit" onClick={handleSubmit}>Login</button>
+                    {error && <label className='ErrorMessage'>{error}</label>}
                 </div>
             )}
         </div>

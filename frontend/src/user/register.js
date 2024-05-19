@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/navbar';
 import axios from 'axios';
 import { useAuth } from '../components/authContext';
@@ -11,7 +11,11 @@ const Register = () => {
   });
 
   const { authData, updateAuthData } = useAuth();
+  const [error, setError] = useState();
   const isRegistered = authData.isLoggedIn;
+
+  useEffect(() => {
+  }, [error]);
 
   const handleChange = (e) => {
     setFormData({
@@ -28,10 +32,9 @@ const Register = () => {
     ).then(response => {
       console.log('Response', response.data);
       updateAuthData({ isLoggedIn: true, username: formDataRegister.name })
-      //TODO: after response send back to main menu
     }).catch(error => {
-      //TODO: handle the errors from backend
-      console.error('Error:', error);
+      console.error('Error:', error.response.data);
+      setError(error.response.data.message)
     })
   }
 
@@ -79,7 +82,9 @@ const Register = () => {
           </div>
           <button type="submit"
             onClick={handleSubmit}>Register</button>
-        </div>)}
+            {error && <label className='ErrorMessage'>{error}</label>}
+        </div>
+      )}
     </div>
   );
 }

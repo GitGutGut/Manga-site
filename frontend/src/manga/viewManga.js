@@ -149,11 +149,16 @@ const Manga = () => {
                         </div>
                     ))}
                 </div>
-                <input className='CommentData' name="data" onChange={changeComment}></input>
-                <button className='AddComment' onClick={uploadComment}>Add a Comment</button>
+                {authData.isLoggedIn ? (
+                    <>
+                    <input className='CommentData' name="data" onChange={changeComment}>
+                    </input><button className='AddComment' onClick={uploadComment}>Add a Comment</button>
+                    </>
+                ) : (<h1> You need to Login to add comment</h1>)}
+
 
             </div>
-        </div>
+        </div >
     );
 }
 

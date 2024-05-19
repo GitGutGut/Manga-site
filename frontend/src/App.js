@@ -27,9 +27,6 @@ function App() {
                 </>}
             </Routes>
           </div>
-          <div className="component">
-            <h1> NAJLEPSIA STRANKA</h1>
-          </div>
         </div>
       </AuthProvider>
     </Router>

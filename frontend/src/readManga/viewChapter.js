@@ -75,8 +75,6 @@ const Chapter = ({ }) => {
                 nextPrevChapter={nextPrevChapter}
                 index={index}
             />}
-            <h1>KUKAJ DEBIL</h1>
-
         </div>
     );
 }
