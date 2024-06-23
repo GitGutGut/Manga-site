@@ -114,4 +114,4 @@ A web application for reading and managing manga, built with Django for the back
 
 ---
 
-This `README.md` file provides an overview of the project, installation steps, and instructions for running the application. Adjust the repository URL and any other specific details as needed for your project.
+ 
