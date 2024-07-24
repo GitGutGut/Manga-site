@@ -1,6 +1,4 @@
-Sure, here is a `README.md` file for your project:
 
----
 
 # Manga Reading Site
 
