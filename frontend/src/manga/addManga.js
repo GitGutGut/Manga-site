@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Navbar from '../components/navbar';
-import axios from 'axios';
+import { addManga } from '../api'; 
 import Tags from '../tags/tags';
+import TagsInput from '../components/tagsInput';
 const AddManga = () => {
     const [mangaInformation, setMangaInformation] = useState({
         photo: null,
@@ -37,18 +38,10 @@ const AddManga = () => {
     }
     const handleMangaAdd = async () => {
         console.log('Form submitted:', mangaInformation);
+        const response = await addManga(mangaInformation);
+        console.log("Respnse: ", response);
 
-        await axios.post("http://localhost:8000/polls/manga-api/",
-            mangaInformation, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        }).then(response => {
-            console.log("Response: ", response);
-        }).catch(error => {
-            console.error(error);
-        })
-    }
+    };
 
     const addTag = (name) => {
         setMangaInformation(prev => ({
@@ -94,19 +87,7 @@ const AddManga = () => {
                             onChange={handleChange} />
                     </div>
                 </form>
-                <div className='tags'>
-                    {Object.entries(Tags)
-                        .sort((a, b) => a[0].localeCompare(b[0]))
-                        .map(([tag, name]) => (
-                            <div key={tag} className='tag'>
-                                <button type="button" className='tagButton' onClick={() => { addTag(name); }}
-                                    style={{
-                                        backgroundColor: activeButton[name] ? 'black' : 'grey'
-                                    }}
-                                >{name}</button>
-                            </div>)
-                        )}
-                </div>
+                <TagsInput tags={Tags} activeButton={activeButton} addTag={addTag} />
                 <div className='chapterAmount'>
                     <label>Chapter amount (only positive numbers):</label>
                     <input type="chapter_amount"

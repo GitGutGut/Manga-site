@@ -1,51 +1,33 @@
-import { useEffect, useState } from "react";
-import { useParams, Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
 import Navbar from "../components/navbar";
-import axios from "axios";
 import ChapterButton from "../components/chapterButton";
+import { obtainChapter, obtainChapterPath } from '../api';
 
-const Chapter = ({ }) => {
+const Chapter = () => {
     const { mangaId, chapterId, index } = useParams();
-    const [chapters, setChapters] = useState();
-    const [filePath, setFilePath] = useState();
-    const [name, setName] = useState();
-    const [nextPrevChapter, setnextPrevChapter] = useState();
+    const [chapters, setChapters] = useState([]);
+    const [filePath, setFilePath] = useState('');
+    const [name, setName] = useState('');
+    const [nextPrevChapter, setNextPrevChapter] = useState(null);
 
     useEffect(() => {
-        obtainChapter();
-        obtainChapterPath();
-    }, []);
+        async function fetchData() {
+            try {
+                const chapterData = await obtainChapter(mangaId, chapterId);
+                setChapters(chapterData.files);
+                setFilePath(chapterData.chapterPath);
+                setName(chapterData.name);
 
-    const obtainChapter = async () => {
-        await axios.get("http://localhost:8000/polls/obtain-chapter/", {
-            params: {
-                chapterId: chapterId,
-                mangaId: mangaId
+                const nextPrevChapterData = await obtainChapterPath(mangaId, index);
+                setNextPrevChapter(nextPrevChapterData);
+            } catch (error) {
+                console.error(error);
             }
-        }).then(response => {
-            console.log(response);
-            setChapters(response.data.files);
-            setFilePath(response.data.chapterPath);
-            setName(response.data.name)
         }
-        ).catch(error => {
-            console.error(error);
-        }
-        )
-    }
-    const obtainChapterPath = async () => {
-        await axios.get("http://localhost:8000/polls/change-chapter/", {
-            params: {
-                i: index,
-                id: mangaId,
-            }
-        }).then(response => {
-            console.log(response)
-            setnextPrevChapter(response.data)
-        }).catch(error => {
-            console.error(error)
-        })
-    }
+
+        fetchData();
+    }, [mangaId, chapterId, index]);
 
     return (
         <div className="ViewChapter">
@@ -62,9 +44,9 @@ const Chapter = ({ }) => {
             />}
             <div className="Chapter">
                 <h1>{name}</h1>
-                {chapters?.map((chapter, index) => (
-                    <img key={index} src={`http://localhost:8000/${filePath}${chapter}`}
-                        alt={`Photo ${index + 1}`} className="PhotoItem" />
+                {chapters.map((chapter, idx) => (
+                    <img key={idx} src={`http://localhost:8000/${filePath}${chapter}`}
+                        alt={`Photo ${idx + 1}`} className="PhotoItem" />
                 ))}
             </div>
             <div className="EndChapter">
@@ -77,6 +59,6 @@ const Chapter = ({ }) => {
             />}
         </div>
     );
-}
+};
 
 export default Chapter;

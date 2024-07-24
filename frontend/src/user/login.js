@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Navbar from '../components/navbar';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { useAuth } from '../components/authContext';
+import { loginUser, checkIfAdministrator } from '../api';
 
 const Login = () => {
     const [formDataLogin, setFormData] = useState({
@@ -12,46 +12,31 @@ const Login = () => {
     const { authData, updateAuthData } = useAuth();
     const [error, setError] = useState();
 
-    useEffect(() => {
-        
-    }, [error]);
-
     const handleChange = (e) => {
         setFormData({
             ...formDataLogin,
             [e.target.name]: e.target.value
         });
-    }
+    };
 
-    const checkIfAdministrator = async () => {
-        await axios.get("http://localhost:8000/polls/user-login/",
-            {
-                params: {
-                    e_mail: formDataLogin.e_mail
-                }
-            }
-        ).then(response => {
-            updateAuthData({ isAdministrator: response.data.administrator, username: response.data.username });
-        }).catch(error => {
-            console.error("Error fetching data:", error);
-        })
-    }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Form submitted:', formDataLogin);
-        await axios.post("http://localhost:8000/polls/user-login/",
-            formDataLogin
-        ).then(response => {
-            console.log('Response', response.data);
+        try {
+            console.log('Form submitted:', formDataLogin);
+            const userResponse = await loginUser(formDataLogin);
+            console.log('Response', userResponse);
+
             updateAuthData({ isLoggedIn: true });
-            checkIfAdministrator()
 
+            const adminResponse = await checkIfAdministrator(formDataLogin.e_mail);
+            updateAuthData({ isAdministrator: adminResponse.administrator, username: adminResponse.username });
 
-        }).catch(error => {
-            console.error('Error:', error.response.data.message);
-            setError(error.response.data.message)
-        })
-    }
+        } catch (error) {
+            console.error('Error:', error.response?.data?.message);
+            setError(error.response?.data?.message || 'An error occurred');
+        }
+    };
+
     return (
         <div className='home'>
             <Navbar />
@@ -82,7 +67,7 @@ const Login = () => {
                             onChange={handleChange}
                         />
                     </div>
-                    <Link to='/register' className='register_link'>Not logged in?</Link>
+                    <Link to='/register' className='register_link'>Not registered?</Link>
                     <button type="submit" onClick={handleSubmit}>Login</button>
                     {error && <label className='ErrorMessage'>{error}</label>}
                 </div>
@@ -90,6 +75,5 @@ const Login = () => {
         </div>
     );
 };
-
 
 export default Login;
