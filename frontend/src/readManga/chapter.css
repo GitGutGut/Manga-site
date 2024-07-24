@@ -1,0 +1,168 @@
+.LinkBox {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    background: rgb(34, 34, 34);
+    border-radius: 5px;
+    margin: 20px auto; 
+    padding: 10px; 
+    overflow: hidden;
+    max-width: 1000px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 3px;
+    width: 80%; 
+  }
+  
+  @media only screen and (max-width: 800px) {
+    .LinkBox {
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+  }
+  
+  .LinkBox a {
+    color: grey;
+    text-decoration: none;
+    transition: color 0.1s linear 0s;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+  
+  .LinkBox a:hover {
+    color: green;
+  }
+  
+  .ChapterMover{
+    display:flex;
+    justify-content: right;  
+  
+  }
+  
+  .ChapterMover button{
+    border: #1e1e1e;
+    border-radius: 10px;
+    font-size: 20px;
+    transition: background-color 0.1s linear 0s;
+  }
+  .ChapterMover button:hover{
+    background-color: green;
+  }
+
+  .EndChapter{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .EndChapter h1{
+    color: white;
+    margin-top: 10px;
+  }
+  
+  .Chapter {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    width: 100%;
+    background-color: #1e1e1e; 
+    padding: 20px 0;
+  }
+
+  .Chapter h1 {
+    color: #ffffff; 
+    margin-bottom: 20px; 
+  }
+  
+  .PhotoItem {
+    width: 100%; 
+    max-width: 600px; 
+  }
+
+  .mangaList {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(2, 1fr); 
+    grid-gap: 10px;
+    align-items: center;
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+    background: #2c2c2c;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+    flex-wrap: wrap;
+    
+  }
+  
+  
+  
+  .Manga {
+    display: flex;
+    justify-content: center;
+    background: #1e1e1e;
+    border-radius: 4px;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    overflow: hidden; 
+    margin-bottom: 20px; 
+    padding: 10px;
+    width: 425px; 
+    height: 180px; 
+    align-items: stretch; 
+  }
+  
+  .Manga img, Link {
+    width: 100%; 
+    object-fit: cover; 
+    height: 100%; 
+  }
+  
+  .MangaDetails {
+    width: 70%;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: flex-start; 
+    color: #fff;
+    overflow: hidden;
+  }
+  
+  .MangaTitle {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .MangaChapter {
+    justify-content: flex-start;
+    margin-top: 5px;
+    color: #aaa;
+  }
+  
+  .MangaChapter a {
+    padding-top: 10px;
+    display: block;
+    color: #7591af;
+    text-decoration: none;
+  }
+  
+  .MangaChapter a:hover {
+    text-decoration: underline;
+  }
+  
+  .Manga:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
+  }
+  
+  .MangaView {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    width: 90%;
+    max-width: 900px;
+    background-color: #2c2c2c;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  }

@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import './manga/mangaIndex.css';
+import './components/component.css';
+import './readManga/chapter.css';
+import './user/registration.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
