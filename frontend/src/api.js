@@ -142,6 +142,6 @@ export const updateManga = async (mangaId, mangaUpdate) => {
         return response.data;
     } catch (error) {
         console.error(error);
-        throw error; // Re-throw the error to handle it in the component
+        throw error;
     }
 };
